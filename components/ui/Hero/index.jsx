@@ -5,12 +5,40 @@ import { useState } from 'react'
 const Hero = () => {
   const [email, setEmail] = useState('')
 
-  const handleSubmit = (e) => {
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [message, setMessage] = useState('')
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    console.log('Email iscrizione:', email)
+    setIsLoading(true)
 
-    setEmail('')
+    setMessage('')
+
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setMessage('Iscrizione completata! Controlla la tua email.')
+
+        setEmail('')
+      } else {
+        setMessage(data.message || "Errore durante l'iscrizione")
+      }
+    } catch (error) {
+      setMessage('Errore di connessione. Riprova più tardi.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -24,25 +52,41 @@ const Hero = () => {
             Stiamo costruendo il gruppo che porterà sul mercato nuove soluzioni
             digitali. Rimani connesso, il futuro di Vellnar è appena iniziato.
           </p>
-          <form
-            onSubmit={handleSubmit}
-            className="flex items-center justify-center gap-x-3 max-w-md mx-auto"
-          >
-            <Input
-              type="email"
-              placeholder="Inserisci la tua email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="flex-1"
-            />
-            <Button
-              type="submit"
-              className="bg-gray-800 hover:bg-gray-600 active:bg-gray-900"
+          <div className="max-w-md mx-auto">
+            <form
+              onSubmit={handleSubmit}
+              className="flex items-center justify-center gap-x-3"
             >
-              Iscriviti
-            </Button>
-          </form>
+              <Input
+                id="newsletter-input"
+                type="email"
+                placeholder="Inserisci la tua email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={isLoading}
+                className="flex-1"
+              />
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="bg-gray-800 hover:bg-gray-600 active:bg-gray-900 disabled:opacity-50"
+              >
+                {isLoading ? 'Invio...' : 'Iscriviti'}
+              </Button>
+            </form>
+            {message && (
+              <p
+                className={`mt-3 text-sm ${
+                  message.includes('completata')
+                    ? 'text-green-600'
+                    : 'text-red-600'
+                }`}
+              >
+                {message}
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </section>
