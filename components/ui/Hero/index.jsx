@@ -43,7 +43,7 @@ const Hero = () => {
 
   return (
     <section>
-      <div className="custom-screen py-28 text-gray-600">
+      <div className="custom-screen py-10 text-gray-600">
         <div className="space-y-5 max-w-4xl mx-auto text-center">
           <h1 className="text-4xl text-gray-800 font-extrabold mx-auto sm:text-6xl">
             Innovazione. Crescita. Vellnar.
@@ -86,6 +86,13 @@ const Hero = () => {
                 {message}
               </p>
             )}
+          </div>
+          <div className="mt-8 max-w-2xl mx-auto">
+            <img
+              src="/hero.svg"
+              alt="Coming Soon"
+              className="w-full h-auto rounded-lg "
+            />
           </div>
         </div>
       </div>

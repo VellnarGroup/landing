@@ -3,7 +3,7 @@ const Footer = () => {
 
   return (
     <footer>
-      <div className="custom-screen pt-16">
+      <div className="custom-screen">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
