@@ -1,6 +1,9 @@
+import { useRouter } from 'next/router'
 import Brand from '../Brand'
 
 const Navbar = () => {
+  const router = useRouter()
+
   const handleNewsletterFocus = () => {
     const newsletterInput = document.getElementById('newsletter-input')
 
@@ -11,6 +14,8 @@ const Navbar = () => {
         behavior: 'smooth',
         block: 'center'
       })
+    } else {
+      router.push('/?focus=newsletter')
     }
   }
 
