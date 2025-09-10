@@ -27,7 +27,7 @@ export default async function handler(req, res) {
 
   try {
     await resend.emails.send({
-      from: 'Vellnar <noreply@vellnar.com>',
+      from: 'onboarding@resend.dev',
       to: [email],
       subject: 'Benvenuto nella newsletter di Vellnar!',
       html: `
@@ -45,7 +45,7 @@ export default async function handler(req, res) {
     })
 
     await resend.emails.send({
-      from: 'Vellnar <noreply@vellnar.com>',
+      from: 'onboarding@resend.dev',
       to: ['admin@vellnar.com'],
       subject: 'Nuova iscrizione newsletter',
       html: `
